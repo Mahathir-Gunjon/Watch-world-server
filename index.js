@@ -32,6 +32,12 @@ async function run() {
             const watch = await watchCollection.findOne(query);
             res.send(watch);
         })
+
+        app.post('/watch', async (req, res) => {
+            const newWatch = req.body;
+            const result = await watchCollection.insertOne(newWatch);
+            res.send(result);
+        })
     }
     finally {
 
