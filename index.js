@@ -38,6 +38,13 @@ async function run() {
             const result = await watchCollection.insertOne(newWatch);
             res.send(result);
         })
+
+        app.delete('/watch/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await watchCollection.deleteOne(query);
+            res.send(result);
+        })
     }
     finally {
 
