@@ -18,6 +18,7 @@ async function run() {
     try {
         await client.connect();
         const watchCollection = client.db('watchWorld').collection('watch');
+        const AddNewItemCollection = client.db('watchWorld').collection('AddNewItem');
 
         app.get('/watch', async (req, res) => {
             const query = {};
@@ -45,6 +46,14 @@ async function run() {
             const result = await watchCollection.deleteOne(query);
             res.send(result);
         })
+
+        app.post('/AddNewItem', async (req, res) => {
+            const newItem = req.body;
+            const result = await AddNewItemCollection.insertOne(newItem);
+            res.send(result);
+        })
+
+
     }
     finally {
 
