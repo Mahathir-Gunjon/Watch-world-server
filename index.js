@@ -34,6 +34,22 @@ async function run() {
             res.send(watch);
         })
 
+
+        app.put('/watch/:id', async (req, res) => {
+            const id = req.params.id;
+            const data = req.body;
+            const filter = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = { 
+                $set: data,
+                     
+                };
+            const result = await watchCollection.updateOne(filter, updateDoc, options);
+            res.send(result);
+
+
+        })
+
         app.post('/watch', async (req, res) => {
             const newWatch = req.body;
             const result = await watchCollection.insertOne(newWatch);
@@ -47,7 +63,7 @@ async function run() {
             res.send(result);
         })
 
-        app.post('/AddNewItem', async (req, res) => {
+        app.post('/addItem', async (req, res) => {
             const newItem = req.body;
             const result = await AddNewItemCollection.insertOne(newItem);
             res.send(result);
@@ -62,11 +78,9 @@ async function run() {
 run().catch(console.dir);
 
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.send('server is running');
 });
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })
-
-// mQaTpl8ONBAlKp4M
